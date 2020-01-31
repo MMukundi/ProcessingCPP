@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Example",
+            "type": "lldb",
+            "request": "launch",
+            "program": "./Example",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Make Example"
+        },
+        {
+            "name": "Run Graphing Example",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/Users/marcelmukundi/Desktop/dev/Bottom-Up-Math/Graphing/Grapher",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Make Grapher"
+        },
+        {
+            "name": "Run Linear Algebra Example",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/Users/marcelmukundi/Desktop/dev/LinearAlgebra/LinAlg",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Make LinAlg"
+        }
+    ]
+}

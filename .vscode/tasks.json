@@ -1,0 +1,76 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build Processing",
+            "command": "/usr/bin/make",
+            "args": [
+                "Processing",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "dependsOn": "Build Processing",
+            "type": "shell",
+            "label": "Make Grapher",
+            "command": "/usr/bin/make",
+            "args": [
+                "Grapher"
+            ],
+            "options": {
+                "cwd": "/Users/marcelmukundi/Desktop/dev/Bottom-Up-Math/Graphing"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "dependsOn": "Build Processing",
+            "type": "shell",
+            "label": "Make LinAlg",
+            "command": "/usr/bin/make",
+            "args": [
+                "LinAlg"
+            ],
+            "options": {
+                "cwd": "/Users/marcelmukundi/Desktop/dev/LinearAlgebra"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "dependsOn": "Build Processing",
+            "type": "shell",
+            "label": "Make Example",
+            "command": "/usr/bin/make",
+            "args": [
+                "Example"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "Compile Current File to Object File",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-r",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ]
+        }
+    ]
+}
