@@ -9,7 +9,6 @@
             "type": "lldb",
             "request": "launch",
             "program": "./Example",
-            "cwd": "${workspaceFolder}",
             "preLaunchTask": "Make Example"
         },
         {
@@ -17,7 +16,6 @@
             "type": "lldb",
             "request": "launch",
             "program": "/Users/marcelmukundi/Desktop/dev/Bottom-Up-Math/Graphing/Grapher",
-            "cwd": "${workspaceFolder}",
             "preLaunchTask": "Make Grapher"
         },
         {
@@ -25,7 +23,6 @@
             "type": "lldb",
             "request": "launch",
             "program": "/Users/marcelmukundi/Desktop/dev/LinearAlgebra/LinAlg",
-            "cwd": "${workspaceFolder}",
             "preLaunchTask": "Make LinAlg"
         }
     ]

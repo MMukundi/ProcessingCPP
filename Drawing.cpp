@@ -1,4 +1,15 @@
 #include "Processing.h"
+
+void Processing::vertex(float x, float y)
+{
+    color(STROKE_VALUE);
+    glVertex2f(x, y);
+}
+void Processing::vertex(float x, float y, float z)
+{
+    color(STROKE_VALUE);
+    glVertex3f(x, y, z);
+}
 void Processing::line(float x1, float y1, float x2, float y2)
 {
     color(STROKE_VALUE);
@@ -7,25 +18,14 @@ void Processing::line(float x1, float y1, float x2, float y2)
     glVertex2f(x2, y2);
     glEnd();
 }
-void Processing::vertex(float x, float y)
-{
-    color(STROKE_VALUE);
-    //printf("%f,%f,%f,%f\n",STROKE_VALUE);
-    glVertex2f(x, y);
-}
-void Processing::vertex(float x, float y, float z)
-{
-    color(STROKE_VALUE);
-    glVertex3f(x, y, z);
-}
-void Processing::rect(float x1, float y1, float x2, float y2)
+void Processing::rect(float x, float y, float w, float h)
 {
     glColor4f(FILL_VALUE);
     glBegin(GL_QUADS);
-    glVertex2f(x1, y1);
-    glVertex2f(x1, y2);
-    glVertex2f(x2, y2);
-    glVertex2f(x2, y1);
+    glVertex2f(x, y);
+    glVertex2f(x, y+h);
+    glVertex2f(x+w, y+h);
+    glVertex2f(x+w, y);
     glEnd();
 }
 void Processing::color(float r, float g, float b)
@@ -50,14 +50,13 @@ void Processing::color(float grayscale)
 }
 void Processing::color(Color c)
 {
-    color(c.r, c.g, c.b);
+    color(c.r, c.g, c.b,c.a);
 }
 
 void Processing::point(float x, float y)
 {
     color(STROKE_VALUE);
     Color t = __FILL__COLOR__;
-    //fill(__STROKE__COLOR__);
     circle(x, y, __STROKE__WEIGHT__ / 2);
     __FILL__COLOR__ = t;
 }
@@ -81,6 +80,8 @@ void Processing::circle(float x, float y, float r)
 
 void Processing::beginShape(Shapes s)
 {
+    // printf("CCC(%f,%f,%f)\n",__FILL__COLOR__.r,__FILL__COLOR__.g,__FILL__COLOR__.b);
+    // printf(__FILL__VARIABLE__ ? "true" : "false");
     color(__FILL__VARIABLE__ ? __FILL__COLOR__ : (s == Polygon || s == Quad ? __STROKE__COLOR__ : __FILL__COLOR__));
     glBegin(__FILL__VARIABLE__ ? s : (s == Polygon || s == Quad ? GL_LINE_LOOP : s));
 }

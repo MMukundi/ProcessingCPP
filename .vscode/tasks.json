@@ -8,9 +8,6 @@
             "args": [
                 "Processing",
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
             "problemMatcher": [
                 "$gcc"
             ],
