@@ -17,7 +17,7 @@ void Processing::run()
     glfwSetErrorCallback(error_callback);
 
     window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-    if (!window)
+    if (window==nullptr)
     {
         glfwTerminate();
         exit(EXIT_FAILURE);
@@ -25,7 +25,7 @@ void Processing::run()
     glfwMakeContextCurrent(window);
 
     float ratio;
-
+    glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE);
     glfwSetWindowUserPointer(window, this);
     glfwSetKeyCallback(window, [](GLFWwindow *window_, int key, int scancode, int action, int mods) {
         ((Processing *)glfwGetWindowUserPointer(window_))->onKeyEvent(key, scancode, action, mods);

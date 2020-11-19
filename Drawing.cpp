@@ -1,33 +1,9 @@
 #include "Processing.h"
 
-void Processing::vertex(float x, float y)
-{
-    color(STROKE_VALUE);
-    glVertex2f(x, y);
+bool isFillAffected(Shapes s){
+    return (s==Quad||s==Polygon);
 }
-void Processing::vertex(float x, float y, float z)
-{
-    color(STROKE_VALUE);
-    glVertex3f(x, y, z);
-}
-void Processing::line(float x1, float y1, float x2, float y2)
-{
-    color(STROKE_VALUE);
-    glBegin(GL_LINES);
-    glVertex2f(x1, y1);
-    glVertex2f(x2, y2);
-    glEnd();
-}
-void Processing::rect(float x, float y, float w, float h)
-{
-    glColor4f(FILL_VALUE);
-    glBegin(GL_QUADS);
-    glVertex2f(x, y);
-    glVertex2f(x, y+h);
-    glVertex2f(x+w, y+h);
-    glVertex2f(x+w, y);
-    glEnd();
-}
+
 void Processing::color(float r, float g, float b)
 {
     r /= MaxColorValue;
@@ -55,6 +31,7 @@ void Processing::color(Color c)
 
 void Processing::point(float x, float y)
 {
+    if(!__STROKE__VARIABLE__)return;
     color(STROKE_VALUE);
     Color t = __FILL__COLOR__;
     circle(x, y, __STROKE__WEIGHT__ / 2);
@@ -63,6 +40,7 @@ void Processing::point(float x, float y)
 
 void Processing::point(float x, float y, float z)
 {
+    if(!__STROKE__VARIABLE__)return;
     color(__STROKE__COLOR__);
     glBegin(GL_POINTS);
     glVertex3f(x, y, z);
@@ -71,6 +49,7 @@ void Processing::point(float x, float y, float z)
 
 void Processing::circle(float x, float y, float r)
 {
+    if(!__FILL__VARIABLE__&&!__STROKE__VARIABLE__)return;
     color(__FILL__VARIABLE__ ? __FILL__COLOR__ : __STROKE__COLOR__);
     glBegin(__FILL__VARIABLE__ ? GL_POLYGON : GL_LINE_LOOP);
     for (float theta = 0, tp = 2 * M_PI; theta <= tp; theta += .01)
@@ -80,20 +59,17 @@ void Processing::circle(float x, float y, float r)
 
 void Processing::beginShape(Shapes s)
 {
-    // printf("CCC(%f,%f,%f)\n",__FILL__COLOR__.r,__FILL__COLOR__.g,__FILL__COLOR__.b);
-    // printf(__FILL__VARIABLE__ ? "true" : "false");
-    color(__FILL__VARIABLE__ ? __FILL__COLOR__ : (s == Polygon || s == Quad ? __STROKE__COLOR__ : __FILL__COLOR__));
-    glBegin(__FILL__VARIABLE__ ? s : (s == Polygon || s == Quad ? GL_LINE_LOOP : s));
+    if(!__FILL__VARIABLE__&&!__STROKE__VARIABLE__)return;
+
+    color(isFillAffected(s)? FILL_VALUE:STROKE_VALUE);
+    glBegin(isFillAffected(s)?s:GL_LINE_LOOP);
 }
 void Processing::fill(Color c)
 {
     __FILL__COLOR__ = c;
     __FILL__VARIABLE__ = true;
 };
-void Processing::fill(float g)
-{
-    __FILL__COLOR__ = Color{g, g, g};
-};
+void Processing::fill(float g){__FILL__COLOR__ = Color{g, g, g};};
 void Processing::fill(float r, float g, float b)
 {
     __FILL__COLOR__ = Color{r, g, b};
@@ -117,10 +93,7 @@ void Processing::stroke(float r, float g, float b)
    __STROKE__COLOR__ = Color{r, g, b};
     __STROKE__VARIABLE__ = true;
 };
-void Processing::noStroke()
-{
-    __STROKE__VARIABLE__ = false;
-}
+void Processing::noStroke(){__STROKE__VARIABLE__ = false;}
 //void stroke() { _FILL_VARIABLE_ = true; };
 
 void Processing::strokeWeight(float w)
@@ -128,21 +101,38 @@ void Processing::strokeWeight(float w)
     glLineWidth(w);
     __STROKE__WEIGHT__ = (w);
 }
-void Processing::background(Color c)
+void Processing::background(Color c){__BACKGROUND__COLOR__ = c;}
+void Processing::background(float g){__BACKGROUND__COLOR__ = {g, g, g};}
+void Processing::background(float r, float g, float b){__BACKGROUND__COLOR__ = {r, g, b};}
+void Processing::background(float r, float g, float b, float a){__BACKGROUND__COLOR__ = {r, g, b, a};}
+
+void Processing::vertex(float x, float y)
 {
-    __BACKGROUND__COLOR__ = c;
+    color(STROKE_VALUE);
+    glVertex2f(x, y);
 }
-void Processing::background(float g)
+void Processing::vertex(float x, float y, float z)
 {
-    __BACKGROUND__COLOR__ = {g, g, g};
+    color(STROKE_VALUE);
+    glVertex3f(x, y, z);
 }
-void Processing::background(float r, float g, float b)
+void Processing::line(float x1, float y1, float x2, float y2)
 {
-    __BACKGROUND__COLOR__ = {r, g, b};
+    color(STROKE_VALUE);
+    glBegin(GL_LINES);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
+    glEnd();
 }
-void Processing::background(float r, float g, float b, float a)
+void Processing::rect(float x, float y, float w, float h)
 {
-    __BACKGROUND__COLOR__ = {r, g, b, a};
+    glColor4f(FILL_VALUE);
+    glBegin(GL_QUADS);
+    glVertex2f(x, y);
+    glVertex2f(x, y+h);
+    glVertex2f(x+w, y+h);
+    glVertex2f(x+w, y);
+    glEnd();
 }
 void Processing::text(float x, float y, const char *c, float size)
 {

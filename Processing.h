@@ -87,9 +87,9 @@ public:
     Processing(int w = 100, int h = 100, const char *t = "Processing") : width(w), height(h), title(t){};
 
     /** The width of the window in screen coordinates*/
-    int width;
+    int width=100;
     /** The height of the window in screen coordinates*/
-    int height;
+    int height=100;
 
     /** The current x-coordinate of the mouse in screen coordinates*/
     double mouseX;
